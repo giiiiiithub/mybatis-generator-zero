@@ -24,6 +24,7 @@ import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class ZeroUpdateWithoutBLOBsElementGenerator extends
         AbstractXmlElementGenerator {
@@ -90,11 +91,17 @@ public class ZeroUpdateWithoutBLOBsElementGenerator extends
         sb.append("</set>"); //$NON-NLS-1$
         answer.addElement(new TextElement(sb.toString()));
         boolean and = false;
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getPrimaryKeyColumns()) {
+        List<IntrospectedColumn> columns;
+        if (introspectedTable.getPrimaryKeyColumns().size() < 1) {
+            columns = introspectedTable.getBaseColumns();
+        } else {
+            columns = introspectedTable.getPrimaryKeyColumns();
+        }
+
+        for (IntrospectedColumn introspectedColumn : columns) {
             sb.setLength(0);
             if (and) {
-                sb.append("  and "); //$NON-NLS-1$
+                sb.append("and "); //$NON-NLS-1$
             } else {
                 sb.append("where "); //$NON-NLS-1$
                 and = true;
