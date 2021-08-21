@@ -2,7 +2,7 @@ MyBatis Generator Zero(MBGZ)
 
 # 改造说明
 
-- 本项目是为了给`web-project-template`项目自动化生成模板代码。
+- 本项目是为了给 [web-project-template](https://github.com/giiiiiithub/web-project-template) 项目自动化生成模板代码。
 - 基于MBG 1.4.0改造，原项目地址: `https://github.com/mybatis/generator/tree/mybatis-generator-1.4.0`
 
 改造内容如下：
