@@ -38,8 +38,7 @@ public class MyBatis3FormattingUtilities {
         return getParameterClause(introspectedColumn, null);
     }
 
-    public static String getParameterClause(
-            IntrospectedColumn introspectedColumn, String prefix) {
+    public static boolean isIgnoreJdbcType(IntrospectedColumn introspectedColumn){
         String javaType = introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName();
         boolean isPresent = Stream.of(Boolean.class, boolean.class,
                 Byte.class, byte.class,
@@ -72,8 +71,15 @@ public class MyBatis3FormattingUtilities {
 
         int jdbcType = introspectedColumn.getJdbcType();
 
-        if (isPresent || (javaType.equals(String.class.getName()) &&
-                (jdbcType == Types.CHAR || jdbcType == Types.VARCHAR || jdbcType == Types.LONGVARCHAR))) {
+        return isPresent || (javaType.equals(String.class.getName()) &&
+                (jdbcType == Types.CHAR || jdbcType == Types.VARCHAR || jdbcType == Types.LONGVARCHAR));
+
+    }
+    public static String getParameterClause(
+            IntrospectedColumn introspectedColumn, String prefix) {
+
+
+        if (isIgnoreJdbcType(introspectedColumn)) {
 
             StringBuilder sb = new StringBuilder();
 

@@ -71,17 +71,21 @@ public class ZeroResultMapWithoutBLOBsElementGenerator extends
     private void addResultMapElements(XmlElement answer) {
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getPrimaryKeyColumns()) {
-            XmlElement resultElement = new XmlElement("id"); //$NON-NLS-1$
+            XmlElement resultElement = new XmlElement("id");
 
             resultElement.addAttribute(generateColumnAttribute(introspectedColumn));
+
             resultElement.addAttribute(new Attribute(
-                    "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-            resultElement.addAttribute(new Attribute("jdbcType", //$NON-NLS-1$
-                    introspectedColumn.getJdbcTypeName()));
+                    "property", introspectedColumn.getJavaProperty()));
+
+            if (!MyBatis3FormattingUtilities.isIgnoreJdbcType(introspectedColumn)) {
+                resultElement.addAttribute(new Attribute("jdbcType",
+                        introspectedColumn.getJdbcTypeName()));
+            }
 
             if (stringHasValue(introspectedColumn.getTypeHandler())) {
                 resultElement.addAttribute(new Attribute(
-                        "typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$
+                        "typeHandler", introspectedColumn.getTypeHandler()));
             }
 
             answer.addElement(resultElement);
@@ -94,17 +98,20 @@ public class ZeroResultMapWithoutBLOBsElementGenerator extends
             columns = introspectedTable.getBaseColumns();
         }
         for (IntrospectedColumn introspectedColumn : columns) {
-            XmlElement resultElement = new XmlElement("result"); //$NON-NLS-1$
-
+            XmlElement resultElement = new XmlElement("result");
             resultElement.addAttribute(generateColumnAttribute(introspectedColumn));
-            resultElement.addAttribute(new Attribute(
-                    "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-            resultElement.addAttribute(new Attribute("jdbcType", //$NON-NLS-1$
-                    introspectedColumn.getJdbcTypeName()));
 
+            resultElement.addAttribute(new Attribute(
+                    "property", introspectedColumn.getJavaProperty()));
+
+            if (!MyBatis3FormattingUtilities.isIgnoreJdbcType(introspectedColumn)) {
+                resultElement.addAttribute(new Attribute("jdbcType",
+                        introspectedColumn.getJdbcTypeName()));
+            }
+            
             if (stringHasValue(introspectedColumn.getTypeHandler())) {
                 resultElement.addAttribute(new Attribute(
-                        "typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$
+                        "typeHandler", introspectedColumn.getTypeHandler()));
             }
 
             answer.addElement(resultElement);
@@ -159,7 +166,7 @@ public class ZeroResultMapWithoutBLOBsElementGenerator extends
 
         answer.addElement(constructor);
     }
-    
+
     private Attribute generateColumnAttribute(IntrospectedColumn introspectedColumn) {
         return new Attribute("column", //$NON-NLS-1$
                 MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn));
