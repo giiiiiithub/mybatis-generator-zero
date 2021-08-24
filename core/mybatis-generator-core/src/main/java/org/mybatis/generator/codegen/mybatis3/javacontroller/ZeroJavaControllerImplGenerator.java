@@ -107,7 +107,6 @@ public class ZeroJavaControllerImplGenerator extends AbstractJavaGenerator {
 
         //方法注解
         method.addAnnotation("@DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)");
-        method.addAnnotation("@ResponseBody");
 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
@@ -148,8 +147,6 @@ public class ZeroJavaControllerImplGenerator extends AbstractJavaGenerator {
         method.setReturnType(new FullyQualifiedJavaType("Resp"));
         method.addAnnotation("@DeleteMapping(value = \"/{" + introspectedTable
                 .getPrimaryKeyColumns().get(0).getJavaProperty() + "s" + "}\")");
-
-        method.addAnnotation("@ResponseBody");
 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
@@ -222,7 +219,6 @@ public class ZeroJavaControllerImplGenerator extends AbstractJavaGenerator {
 
         //方法注解
         method.addAnnotation("@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)");
-        method.addAnnotation("@ResponseBody");
 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
@@ -263,7 +259,6 @@ public class ZeroJavaControllerImplGenerator extends AbstractJavaGenerator {
 
         //方法注解
         method.addAnnotation("@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)");
-        method.addAnnotation("@ResponseBody");
 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
@@ -277,7 +272,6 @@ public class ZeroJavaControllerImplGenerator extends AbstractJavaGenerator {
         String paramName = voTypeName.substring(0, 1).toLowerCase()
                 + voTypeName.substring(1);
         Parameter parameter = new Parameter(parameterType, paramName);
-        parameter.addAnnotation("@RequestBody");
         method.addParameter(parameter);
         importedTypes.add(voType);
 
@@ -313,7 +307,6 @@ public class ZeroJavaControllerImplGenerator extends AbstractJavaGenerator {
         } else {
             method.addAnnotation("@GetMapping");
         }
-        method.addAnnotation("@ResponseBody");
 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
@@ -348,7 +341,6 @@ public class ZeroJavaControllerImplGenerator extends AbstractJavaGenerator {
 
         //方法注解
         method.addAnnotation("@PostMapping(value = \"/queries\", consumes = MediaType.APPLICATION_JSON_VALUE)");
-        method.addAnnotation("@ResponseBody");
 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
